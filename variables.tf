@@ -18,6 +18,11 @@ variable "virtual_network_name" {
   type        = string
 }
 
+variable "virtual_network_address_space" {
+  description = "The address space of the virtual network the sensor will observe traffic in"
+  type        = string
+}
+
 variable "virtual_network_resource_group" {
   description = "The resource group where the virtual network is deployed"
   type        = string
@@ -84,6 +89,6 @@ variable "virtual_machine_size" {
 }
 
 variable "tags" {
-  type = object({})
+  type    = object({})
   default = {}
 }

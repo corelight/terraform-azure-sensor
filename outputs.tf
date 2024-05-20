@@ -1,15 +1,3 @@
-output "bastion_subnet_name" {
-  value = azurerm_subnet.bastion_subnet.name
-}
-
-output "bastion_public_ip_name" {
-  value = azurerm_public_ip.bastion_ip.name
-}
-
-output "bastion_host_name" {
-  value = azurerm_bastion_host.bastion.name
-}
-
 output "internal_load_balancer_name" {
   value = azurerm_lb.scale_set_lb.name
 }

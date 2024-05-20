@@ -50,23 +50,6 @@ variable "sensor_admin_username" {
   type        = string
   default     = "corelight"
 }
-variable "create_bastion_host" {
-  description = "Set to true if a bastion subnet and host should be deployed in the vnet for accessing the corelight sensors directly"
-  type        = bool
-  default     = false
-}
-
-variable "bastion_host_ip_name" {
-  description = "The resource name of the bastion host public IP"
-  type        = string
-  default     = "cl-bastion-ip"
-}
-
-variable "bastion_host_name" {
-  description = "The bastion host resource name"
-  type        = string
-  default     = "cl-bastion"
-}
 
 variable "nat_gateway_ip_name" {
   description = "The resource name of the VMSS NAT Gateway public IP resource"
@@ -101,6 +84,6 @@ variable "virtual_machine_size" {
 }
 
 variable "tags" {
-  type    = object({})
+  type = object({})
   default = {}
 }

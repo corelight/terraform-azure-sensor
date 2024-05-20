@@ -31,7 +31,7 @@ data "azurerm_virtual_network" "existing_vnet" {
 # Deploy the Sensor
 ####################################################################################################
 module "sensor" {
-  source = "../../modules/scale_set"
+  source = "../.."
 
   license_key                    = local.license
   location                       = local.location

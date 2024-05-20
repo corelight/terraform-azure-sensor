@@ -1,10 +1,3 @@
-module "cloud_init" {
-  source = "../cloud_init"
-
-  license_key         = var.license_key
-  sensor_api_password = var.sensor_api_password
-}
-
 resource "azurerm_linux_virtual_machine_scale_set" "sensor_scale_set" {
   admin_username = var.sensor_admin_username
   admin_ssh_key {
@@ -16,7 +9,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "sensor_scale_set" {
   resource_group_name = var.resource_group_name
   sku                 = var.virtual_machine_size
   instances           = 1
-  custom_data         = module.cloud_init.rendered_cloud_init
+  custom_data         = data.cloudinit_config.config.rendered
 
   source_image_id = var.corelight_sensor_image_id
 

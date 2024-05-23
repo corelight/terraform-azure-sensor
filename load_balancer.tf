@@ -5,7 +5,7 @@ resource "azurerm_lb" "scale_set_lb" {
   sku                 = "Standard"
 
   frontend_ip_configuration {
-    name      = "corelight-sensor-lb-ip"
+    name      = var.lb_frontend_ip_config_name
     subnet_id = azurerm_subnet.subnet.id
   }
 
@@ -14,17 +14,17 @@ resource "azurerm_lb" "scale_set_lb" {
 
 resource "azurerm_lb_backend_address_pool" "management_pool" {
   loadbalancer_id = azurerm_lb.scale_set_lb.id
-  name            = "management-pool"
+  name            = var.lb_mgmt_backend_address_pool_name
 }
 
 resource "azurerm_lb_backend_address_pool" "monitoring_pool" {
   loadbalancer_id = azurerm_lb.scale_set_lb.id
-  name            = "monitoring-pool"
+  name            = var.lb_mon_backend_address_pool_name
 }
 
 resource "azurerm_lb_probe" "sensor_health_check_probe" {
   loadbalancer_id     = azurerm_lb.scale_set_lb.id
-  name                = "health-check"
+  name                = var.lb_health_check_probe_name
   port                = 443
   request_path        = "/api/system/healthcheck/"
   protocol            = "Https"
@@ -34,7 +34,7 @@ resource "azurerm_lb_probe" "sensor_health_check_probe" {
 
 resource "azurerm_lb_rule" "monitoring_vxlan_lb_rule" {
   loadbalancer_id                = azurerm_lb.scale_set_lb.id
-  name                           = "vxlan-lb-rule"
+  name                           = var.lb_vxlan_rule_name
   protocol                       = "Udp"
   backend_port                   = 4789
   frontend_port                  = 4789
@@ -45,7 +45,7 @@ resource "azurerm_lb_rule" "monitoring_vxlan_lb_rule" {
 }
 
 resource "azurerm_lb_rule" "monitoring_geneve_lb_rule" {
-  name                           = "geneve-lb-rule"
+  name                           = var.lb_geneve_rule_name
   loadbalancer_id                = azurerm_lb.scale_set_lb.id
   protocol                       = "Udp"
   backend_port                   = 6081
@@ -57,7 +57,7 @@ resource "azurerm_lb_rule" "monitoring_geneve_lb_rule" {
 }
 
 resource "azurerm_lb_rule" "monitoring_health_check_rule" {
-  name                           = "healthcheck-lb-rule"
+  name                           = var.lb_health_check_rule_name
   loadbalancer_id                = azurerm_lb.scale_set_lb.id
   protocol                       = "Tcp"
   backend_port                   = 443
@@ -70,7 +70,7 @@ resource "azurerm_lb_rule" "monitoring_health_check_rule" {
 }
 
 resource "azurerm_lb_rule" "management_lb_rule" {
-  name                           = "management-ssh-lb-rule"
+  name                           = var.lb_ssh_rule_name
   loadbalancer_id                = azurerm_lb.scale_set_lb.id
   frontend_ip_configuration_name = azurerm_lb.scale_set_lb.frontend_ip_configuration[0].name
   protocol                       = "Tcp"

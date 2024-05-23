@@ -102,20 +102,12 @@ variable "enrichment_storage_account_name" {
   description = "(optional) the azure storage account where enrichment data is stored"
   type        = string
   default     = ""
-  validation {
-    condition     = var.enrichment_storage_account_name != "" && var.enrichment_storage_container_name == ""
-    error_message = "enrichment_storage_account_name and enrichment_storage_container_name must both be populated"
-  }
 }
 
 variable "enrichment_storage_container_name" {
   description = "(optional) the container where enrichment data is stored"
   type        = string
   default     = ""
-  validation {
-    condition     = var.enrichment_storage_container_name != "" && var.enrichment_storage_account_name == ""
-    error_message = "enrichment_storage_account_name and enrichment_storage_container_name must both be populated"
-  }
 }
 
 variable "lb_frontend_ip_config_name" {

@@ -120,50 +120,50 @@ variable "enrichment_storage_container_name" {
 
 variable "lb_frontend_ip_config_name" {
   description = "Name of the internal load balancer frontend ip configuration"
-  type = string
-  default = "corelight-sensor-lb-ip"
+  type        = string
+  default     = "corelight-sensor-lb-ip"
 }
 
 variable "lb_mgmt_backend_address_pool_name" {
   description = "Name of the load balancer management backend address pool"
-  type = string
-  default = "management-pool"
+  type        = string
+  default     = "management-pool"
 }
 
 variable "lb_mon_backend_address_pool_name" {
   description = "Name of the load balancer monitoring backend address pool"
-  type = string
-  default = "monitoring-pool"
+  type        = string
+  default     = "monitoring-pool"
 }
 
 variable "lb_health_check_probe_name" {
   description = "Name of the load balancer health check probe that check the sensor healthcheck API"
-  type = string
-  default = "health-check"
+  type        = string
+  default     = "health-check"
 }
 
 variable "lb_vxlan_rule_name" {
   description = "Name of the load balancer rule for VXLAN traffic"
-  type = string
-  default = "vxlan-lb-rule"
+  type        = string
+  default     = "vxlan-lb-rule"
 }
 
 variable "lb_geneve_rule_name" {
   description = "Name of the load balancer rule for Geneve traffic"
-  type = string
-  default = "geneve-lb-rule"
+  type        = string
+  default     = "geneve-lb-rule"
 }
 
 variable "lb_health_check_rule_name" {
   description = "Name of the load balancer rule for health check traffic"
-  type = string
-  default = "healthcheck-lb-rule"
+  type        = string
+  default     = "healthcheck-lb-rule"
 }
 
 variable "lb_ssh_rule_name" {
   description = "Name of the load balancer rule for SSH traffic"
-  type = string
-  default = "management-ssh-lb-rule"
+  type        = string
+  default     = "management-ssh-lb-rule"
 }
 
 

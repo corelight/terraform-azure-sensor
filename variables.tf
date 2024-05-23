@@ -14,12 +14,12 @@ variable "license_key" {
 }
 
 variable "virtual_network_name" {
-  description = "The name of the virtual network the sensor will observe traffic in"
+  description = "The name of the virtual network the sensor will be deployed in"
   type        = string
 }
 
 variable "virtual_network_address_space" {
-  description = "The address space of the virtual network the sensor will observe traffic in"
+  description = "The address space of the virtual network the sensor be deployed in"
   type        = string
 }
 
@@ -69,26 +69,57 @@ variable "nat_gateway_name" {
 }
 
 variable "autoscale_setting_name" {
-  type    = string
-  default = "corelight-scale-set-autoscale-cfg"
+  description = "The VMSS autoscale monitor name"
+  type        = string
+  default     = "corelight-scale-set-autoscale-cfg"
 }
 
 variable "load_balancer_name" {
-  type    = string
-  default = "corelight-sensor-lb"
+  description = "The nane of the internal load balancer that sends traffic to the VMSS"
+  type        = string
+  default     = "corelight-sensor-lb"
 }
 
 variable "scale_set_name" {
-  type    = string
-  default = "vmss-sensor"
+  description = "Name of the Corelight VMSS of sensors"
+  type        = string
+  default     = "vmss-sensor"
 }
 
 variable "virtual_machine_size" {
-  type    = string
-  default = "Standard_D4s_v3"
+  description = "The VMSS VM size"
+  type        = string
+  default     = "Standard_D4s_v3"
+}
+
+variable "virtual_machine_os_disk_size" {
+  description = "The amount of OS disk to attach to the VMSS instances"
+  type        = number
+  default     = 500
+}
+
+variable "enrichment_storage_account_name" {
+  description = "(optional) the azure storage account where enrichment data is stored"
+  type        = string
+  default     = ""
+  validation {
+    condition     = var.enrichment_storage_account_name != "" && var.enrichment_storage_container_name == ""
+    error_message = "enrichment_storage_account_name and enrichment_storage_container_name must both be populated"
+  }
+}
+
+variable "enrichment_storage_container_name" {
+  description = "(optional) the container where enrichment data is stored"
+  type        = string
+  default     = ""
+  validation {
+    condition     = var.enrichment_storage_container_name != "" && var.enrichment_storage_account_name == ""
+    error_message = "enrichment_storage_account_name and enrichment_storage_container_name must both be populated"
+  }
 }
 
 variable "tags" {
-  type    = object({})
-  default = {}
+  description = "Any tags that should be applied to resources deployed by the module"
+  type        = object({})
+  default     = {}
 }

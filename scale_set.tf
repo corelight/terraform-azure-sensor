@@ -9,7 +9,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "sensor_scale_set" {
   resource_group_name = var.resource_group_name
   sku                 = var.virtual_machine_size
   instances           = 1
-  custom_data         = data.cloudinit_config.config.rendered
+  custom_data         = var.enrichment_storage_account_name == "" ? data.cloudinit_config.config.rendered : data.cloudinit_config.config_with_enrichment.rendered
 
   source_image_id = var.corelight_sensor_image_id
 
@@ -20,7 +20,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "sensor_scale_set" {
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "StandardSSD_LRS"
-    disk_size_gb         = 100
+    disk_size_gb         = var.virtual_machine_os_disk_size
   }
 
   health_probe_id = azurerm_lb_probe.sensor_health_check_probe.id
@@ -29,6 +29,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "sensor_scale_set" {
     primary = true
 
     ip_configuration {
+      primary   = false
       name      = "management-nic-ip-cfg"
       subnet_id = azurerm_subnet.subnet.id
       load_balancer_backend_address_pool_ids = [
@@ -38,10 +39,9 @@ resource "azurerm_linux_virtual_machine_scale_set" "sensor_scale_set" {
   }
 
   network_interface {
-    name    = "monitoring-nic"
-    primary = false
-
+    name = "monitoring-nic"
     ip_configuration {
+      primary   = false
       name      = "monitoring-nic-ip-cfg"
       subnet_id = azurerm_subnet.subnet.id
       load_balancer_backend_address_pool_ids = [
@@ -111,4 +111,8 @@ resource "azurerm_monitor_autoscale_setting" "auto_scale_config" {
   }
 
   tags = var.tags
+
+  depends_on = [
+    azurerm_lb_probe.sensor_health_check_probe
+  ]
 }

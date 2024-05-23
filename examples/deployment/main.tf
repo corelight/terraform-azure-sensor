@@ -37,14 +37,23 @@ module "sensor" {
   location                       = local.location
   resource_group_name            = azurerm_resource_group.sensor_rg.name
   virtual_network_name           = data.azurerm_virtual_network.existing_vnet.name
-  corelight_sensor_image_id      = "<image resource id from Corelight"
+  virtual_network_resource_group = "<vnet resource group>"
+  virtual_network_address_space  = "<vnet address space (CIDR)>"
+  corelight_sensor_image_id      = "<image resource id from Corelight>"
   sensor_api_password            = "<password for the sensor api>"
   sensor_ssh_public_key          = "<path to ssh public key>"
-  virtual_network_resource_group = "<vnet resource group"
 
-  # Optionally create a bastion host for accessing the sensor
-  # create_bastion_host  = true
-
-  tags = local.tags
+  # (Optional) Cloud Enrichment Variables
+  enrichment_storage_account_name   = "<name of the enrichment storage account>"
+  enrichment_storage_container_name = "<name of the enrichment container in the storage account>"
+  tags                              = local.tags
 }
 
+####################################################################################################
+# (Optional) Assign the VMSS identity access to the enrichment bucket if enabled
+####################################################################################################
+resource "azurerm_role_assignment" "enrichment_data_access" {
+  principal_id         = module.sensor.sensor_identity_principal_id
+  scope                = "<resource id of the enrichment storage account>"
+  role_definition_name = "Storage Blob Data Reader"
+}

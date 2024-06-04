@@ -11,6 +11,7 @@ variable "resource_group_name" {
 variable "license_key" {
   description = "Your Corelight sensor license key"
   type        = string
+  sensitive   = true
 }
 
 variable "virtual_network_name" {

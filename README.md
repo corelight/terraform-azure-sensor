@@ -5,8 +5,8 @@ Terraform for Corelight's Azure Cloud Sensor Deployment.
 <img src="docs/overview.svg" alt="overview">
 
 ## Usage
-```hcl
-resource "sensor" {
+```terraform
+module "sensor" {
   source = "github.com/corelight/terraform-azure-sensor"
 
   license_key                    = "<your Corelight sensor license key>"

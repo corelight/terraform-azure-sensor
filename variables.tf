@@ -34,10 +34,10 @@ variable "corelight_sensor_image_id" {
   type        = string
 }
 
-variable "sensor_api_password" {
-  description = "The password that should be used for the Corelight sensor API"
-  sensitive   = true
+variable "community_string" {
   type        = string
+  sensitive   = true
+  description = "the community string (api string) often times referenced by Fleet"
 }
 
 variable "sensor_ssh_public_key" {

@@ -16,7 +16,7 @@ module "sensor" {
   virtual_network_resource_group = "<virtual network resource group>"
   virtual_network_address_space  = "<virtual network address space (CIDR) used to create subnet>"
   corelight_sensor_image_id      = "<image resource id from Corelight>"
-  sensor_api_password            = "<password for the sensor api>"
+  community_string               = "<the community string (api string) often times referenced by Fleet>"
   sensor_ssh_public_key          = "<path to ssh public key>"
 
   # (Optional) Cloud Enrichment Variables

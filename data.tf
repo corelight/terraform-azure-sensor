@@ -6,7 +6,7 @@ data "cloudinit_config" "config" {
     content_type = "text/cloud-config"
     content = templatefile("${path.module}/templates/sensor_init.tpl",
       {
-        api_password   = var.sensor_api_password
+        api_password   = var.community_string
         sensor_license = var.license_key
         mgmt_int       = "eth0"
         mon_int        = "eth1"
@@ -24,7 +24,7 @@ data "cloudinit_config" "config_with_enrichment" {
     content_type = "text/cloud-config"
     content = templatefile("${path.module}/templates/sensor_init_with_enrichment.tpl",
       {
-        api_password         = var.sensor_api_password
+        api_password         = var.community_string
         sensor_license       = var.license_key
         mgmt_int             = "eth0"
         mon_int              = "eth1"

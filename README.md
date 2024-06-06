@@ -5,6 +5,7 @@ Terraform for Corelight's Azure Cloud Sensor Deployment.
 <img src="docs/overview.svg" alt="overview">
 
 ## Usage
+
 ```terraform
 module "sensor" {
   source = "github.com/corelight/terraform-azure-sensor"
@@ -19,14 +20,15 @@ module "sensor" {
   community_string               = "<the community string (api string) often times referenced by Fleet>"
   sensor_ssh_public_key          = "<path to ssh public key>"
 
-  # (Optional) Cloud Enrichment Variables
-  enrichment_storage_account_name   = "<name of the enrichment storage account>"
-  enrichment_storage_container_name = "<name of the enrichment container in the storage account>"
   tags                              = {
     foo: bar,
     terraform: true,
     purpose: Corelight
   }
+
+  # (Optional) Cloud Enrichment Variables
+  enrichment_storage_account_name   = "<name of the enrichment storage account>"
+  enrichment_storage_container_name = "<name of the enrichment container in the storage account>"
 }
 ```
 

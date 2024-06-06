@@ -24,6 +24,8 @@ resource "azurerm_linux_virtual_machine_scale_set" "sensor_scale_set" {
   }
 
   health_probe_id = azurerm_lb_probe.sensor_health_check_probe.id
+  upgrade_mode    = "Automatic"
+
   network_interface {
     name    = "management-nic"
     primary = true
@@ -51,6 +53,10 @@ resource "azurerm_linux_virtual_machine_scale_set" "sensor_scale_set" {
   }
 
   tags = var.tags
+
+  depends_on = [
+    azurerm_lb_rule.monitoring_health_check_rule,
+  ]
 }
 
 resource "azurerm_monitor_autoscale_setting" "auto_scale_config" {

@@ -57,6 +57,18 @@ variable "sensor_admin_username" {
   default     = "corelight"
 }
 
+variable "nat_gateway_ip_name" {
+  description = "The resource name of the VMSS NAT Gateway public IP resource"
+  type        = string
+  default     = "cl-nat-gw-ip"
+}
+
+variable "nat_gateway_name" {
+  description = "The resource name of the VMSS NAT Gateway resource"
+  type        = string
+  default     = "cl-sensor-nat-gw"
+}
+
 variable "autoscale_setting_name" {
   description = "The VMSS autoscale monitor name"
   type        = string

@@ -42,6 +42,7 @@ resource "azurerm_lb_rule" "monitoring_vxlan_lb_rule" {
   backend_address_pool_ids = [
     azurerm_lb_backend_address_pool.monitoring_pool.id
   ]
+  probe_id = azurerm_lb_probe.sensor_health_check_probe.id
 }
 
 resource "azurerm_lb_rule" "monitoring_geneve_lb_rule" {
@@ -54,6 +55,7 @@ resource "azurerm_lb_rule" "monitoring_geneve_lb_rule" {
   backend_address_pool_ids = [
     azurerm_lb_backend_address_pool.monitoring_pool.id
   ]
+  probe_id = azurerm_lb_probe.sensor_health_check_probe.id
 }
 
 resource "azurerm_lb_rule" "monitoring_health_check_rule" {
@@ -79,4 +81,5 @@ resource "azurerm_lb_rule" "management_lb_rule" {
   backend_address_pool_ids = [
     azurerm_lb_backend_address_pool.management_pool.id
   ]
+  probe_id = azurerm_lb_probe.sensor_health_check_probe.id
 }

@@ -20,7 +20,7 @@ module "sensor" {
   community_string               = "<the community string (api string) often times referenced by Fleet>"
   sensor_ssh_public_key          = "<path to ssh public key>"
 
-  tags                              = {
+  tags = {
     foo: bar,
     terraform: true,
     purpose: Corelight

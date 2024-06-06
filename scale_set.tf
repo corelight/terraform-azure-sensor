@@ -1,3 +1,25 @@
+module "sensor_config" {
+  source = "github.com/corelight/terraform-config-sensor"
+
+  fleet_community_string                       = var.community_string
+  sensor_license                               = var.license_key
+  sensor_management_interface_name             = "eth0"
+  sensor_monitoring_interface_name             = "eth1"
+  ### begin i don't think Azure is setup correctly
+  ### the mgmt interface needs to be the default gw
+  ### the mon interface is what the load balacner is hooked up to
+  ### if a health check comes into the mon interface by default it will respond
+  ### out the mgmt interface, unless the following is configured, which causes
+  ### packets to return out the mon interface
+  sensor_health_check_probe_source_ranges_cidr = var.region_probe_source_ranges_cidr
+  subnetwork_monitoring_cidr                   = var.subnetwork_mon_cidr
+  subnetwork_monitoring_gateway                = var.subnetwork_mon_gateway
+  ### end
+  enrichment_cloud_provider_name               = "azure"
+  enrichment_storage_account_name              = var.enrichment_storage_account_name
+  enrichment_storage_container_name            = var.enrichment_storage_container_name
+}
+
 resource "azurerm_linux_virtual_machine_scale_set" "sensor_scale_set" {
   admin_username = var.sensor_admin_username
   admin_ssh_key {
@@ -9,7 +31,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "sensor_scale_set" {
   resource_group_name = var.resource_group_name
   sku                 = var.virtual_machine_size
   instances           = 1
-  custom_data         = var.enrichment_storage_account_name == "" ? data.cloudinit_config.config.rendered : data.cloudinit_config.config_with_enrichment.rendered
+  custom_data         = module.sensor_config.cloudinit_config.rendered
 
   source_image_id = var.corelight_sensor_image_id
 
@@ -26,6 +48,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "sensor_scale_set" {
   health_probe_id = azurerm_lb_probe.sensor_health_check_probe.id
   upgrade_mode    = "Automatic"
 
+  ### it looks like these are both on the same subnet
   network_interface {
     name    = "management-nic"
     primary = true

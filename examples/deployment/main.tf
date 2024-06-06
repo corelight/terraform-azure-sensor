@@ -2,7 +2,8 @@ locals {
   subscription_id     = "<your subscription uuid>"
   resource_group_name = "corelight"
   location            = "eastus"
-  license             = "<your corelight sensor license key>"
+  license_key         = file("~/corelight-license.txt")
+  community_string    = "managedPassword!"
   tags = {
     terraform : true,
     purpose : "Corelight"
@@ -33,14 +34,14 @@ data "azurerm_virtual_network" "existing_vnet" {
 module "sensor" {
   source = "../.."
 
-  license_key                    = local.license
+  license_key                    = local.license_key
   location                       = local.location
   resource_group_name            = azurerm_resource_group.sensor_rg.name
   virtual_network_name           = data.azurerm_virtual_network.existing_vnet.name
   virtual_network_resource_group = "<vnet resource group>"
   virtual_network_address_space  = "<vnet address space (CIDR)>"
   corelight_sensor_image_id      = "<image resource id from Corelight>"
-  community_string               = "<the community string (api string) often times referenced by Fleet>"
+  community_string               = local.community_string
   sensor_ssh_public_key          = "<path to ssh public key>"
 
   # (Optional) Cloud Enrichment Variables

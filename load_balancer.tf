@@ -58,6 +58,8 @@ resource "azurerm_lb_rule" "monitoring_geneve_lb_rule" {
   probe_id = azurerm_lb_probe.sensor_health_check_probe.id
 }
 
+# correct me if I am wrong but it looks like this monitoring health check rule uses the management pool
+# therefore it's health checking the management interface
 resource "azurerm_lb_rule" "monitoring_health_check_rule" {
   name                           = var.lb_health_check_rule_name
   loadbalancer_id                = azurerm_lb.scale_set_lb.id

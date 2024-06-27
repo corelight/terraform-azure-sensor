@@ -153,19 +153,11 @@ variable "lb_health_check_rule_name" {
   default     = "healthcheck-lb-rule"
 }
 
-variable "health_check_port" {
-  description = "the port number for the HTTP health check request"
-  type        = string
-  default     = "41080"
-}
-
 variable "lb_ssh_rule_name" {
   description = "Name of the load balancer rule for SSH traffic"
   type        = string
   default     = "management-ssh-lb-rule"
 }
-
-
 
 variable "tags" {
   description = "Any tags that should be applied to resources deployed by the module"

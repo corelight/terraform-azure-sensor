@@ -31,8 +31,8 @@ resource "azurerm_linux_virtual_machine_scale_set" "sensor_scale_set" {
     primary = true
 
     ip_configuration {
-      primary   = false
       name      = "management-nic-ip-cfg"
+      primary   = true
       subnet_id = azurerm_subnet.subnet.id
       load_balancer_backend_address_pool_ids = [
         azurerm_lb_backend_address_pool.management_pool.id
@@ -43,8 +43,8 @@ resource "azurerm_linux_virtual_machine_scale_set" "sensor_scale_set" {
   network_interface {
     name = "monitoring-nic"
     ip_configuration {
-      primary   = false
       name      = "monitoring-nic-ip-cfg"
+      primary   = true
       subnet_id = azurerm_subnet.subnet.id
       load_balancer_backend_address_pool_ids = [
         azurerm_lb_backend_address_pool.monitoring_pool.id

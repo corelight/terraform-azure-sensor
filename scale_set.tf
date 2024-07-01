@@ -9,7 +9,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "sensor_scale_set" {
   resource_group_name = var.resource_group_name
   sku                 = var.virtual_machine_size
   instances           = 1
-  custom_data         = var.enrichment_storage_account_name == "" ? data.cloudinit_config.config.rendered : data.cloudinit_config.config_with_enrichment.rendered
+  custom_data         = module.sensor_config.cloudinit_config.rendered
 
   source_image_id = var.corelight_sensor_image_id
 
@@ -31,8 +31,8 @@ resource "azurerm_linux_virtual_machine_scale_set" "sensor_scale_set" {
     primary = true
 
     ip_configuration {
-      primary   = false
       name      = "management-nic-ip-cfg"
+      primary   = true
       subnet_id = azurerm_subnet.subnet.id
       load_balancer_backend_address_pool_ids = [
         azurerm_lb_backend_address_pool.management_pool.id
@@ -43,8 +43,8 @@ resource "azurerm_linux_virtual_machine_scale_set" "sensor_scale_set" {
   network_interface {
     name = "monitoring-nic"
     ip_configuration {
-      primary   = false
       name      = "monitoring-nic-ip-cfg"
+      primary   = true
       subnet_id = azurerm_subnet.subnet.id
       load_balancer_backend_address_pool_ids = [
         azurerm_lb_backend_address_pool.monitoring_pool.id

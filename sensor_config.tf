@@ -7,6 +7,12 @@ module "sensor_config" {
   source = "github.com/corelight/terraform-config-sensor?ref=v0.1.0"
 
   fleet_community_string                       = var.community_string
+  fleet_token                                  = var.fleet_token
+  fleet_url                                    = var.fleet_url
+  fleet_server_sslname                         = var.fleet_server_sslname
+  fleet_http_proxy                             = var.fleet_http_proxy
+  fleet_https_proxy                            = var.fleet_https_proxy
+  fleet_no_proxy                               = var.fleet_no_proxy
   sensor_license                               = var.license_key
   sensor_management_interface_name             = "eth0"
   sensor_monitoring_interface_name             = "eth1"

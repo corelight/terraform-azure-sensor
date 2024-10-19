@@ -7,6 +7,8 @@ locals {
     terraform : true,
     purpose : "Corelight"
   }
+  fleet_token = "b1cd099ff22ed8a41abc63929d1db126"
+  fleet_url   = "https://fleet.example.com:1443/fleet/v1/internal/softsensor/websocket"
 }
 
 ####################################################################################################
@@ -41,6 +43,8 @@ module "sensor" {
   virtual_network_address_space  = "<vnet address space (CIDR)>"
   corelight_sensor_image_id      = "<image resource id from Corelight>"
   community_string               = "<the community string (api string) often times referenced by Fleet>"
+  fleet_token                    = local.fleet_token
+  fleet_url                      = local.fleet_url
   sensor_ssh_public_key          = "<path to ssh public key>"
 
   # (Optional) Cloud Enrichment Variables

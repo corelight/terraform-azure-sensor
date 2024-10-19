@@ -26,6 +26,10 @@ module "sensor" {
     purpose: Corelight
   }
 
+  # Optional - Fleet Manager
+  fleet_token = "<the pairing token from the Fleet UI>"
+  fleet_url   = "<the URL of the fleet instance from the Fleet UI>"
+
   # (Optional) Cloud Enrichment Variables
   enrichment_storage_account_name   = "<name of the enrichment storage account>"
   enrichment_storage_container_name = "<name of the enrichment container in the storage account>"

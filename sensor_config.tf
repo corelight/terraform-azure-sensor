@@ -4,7 +4,7 @@ locals {
 }
 
 module "sensor_config" {
-  source = "github.com/corelight/terraform-config-sensor?ref=v0.1.0"
+  source = "github.com/corelight/terraform-config-sensor?ref=v0.3.0"
 
   fleet_community_string                       = var.community_string
   fleet_token                                  = var.fleet_token

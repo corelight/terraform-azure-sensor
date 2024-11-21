@@ -18,6 +18,6 @@ output "sensor_scale_set_name" {
   value = azurerm_linux_virtual_machine_scale_set.sensor_scale_set.name
 }
 
-output "sensor_scale_set_subnet_name" {
-  value = azurerm_subnet.subnet.name
+output "sensor_load_balancer_frontend_ip_address" {
+  value = azurerm_lb.scale_set_lb.frontend_ip_configuration[0].private_ip_address
 }

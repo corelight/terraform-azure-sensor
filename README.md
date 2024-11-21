@@ -13,13 +13,12 @@ module "sensor" {
   license_key                    = "<your Corelight sensor license key>"
   location                       = "<Azure location to deploy resources in>"
   resource_group_name            = "<resource group to deploy in>"
-  virtual_network_name           = "<virtual network where VMSS subnet should be deployed>"
-  virtual_network_resource_group = "<virtual network resource group>"
-  virtual_network_address_space  = "<virtual network address space (CIDR) used to create subnet>"
   corelight_sensor_image_id      = "<image resource id from Corelight>"
   community_string               = "<the community string (api string) often times referenced by Fleet>"
   sensor_ssh_public_key          = "<path to ssh public key>"
-
+  management_subnet_id           = "<full management NIC subnet resource ID>"
+  monitoring_subnet_id           = "<full management NIC subnet resource ID>"
+    
   tags = {
     foo: bar,
     terraform: true,

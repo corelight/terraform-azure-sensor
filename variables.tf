@@ -14,18 +14,13 @@ variable "license_key" {
   sensitive   = true
 }
 
-variable "virtual_network_name" {
-  description = "The name of the virtual network the sensor will be deployed in"
+variable "management_subnet_id" {
+  description = "The subnet used to access the sensor"
   type        = string
 }
 
-variable "virtual_network_address_space" {
-  description = "The address space of the virtual network the sensor be deployed in"
-  type        = string
-}
-
-variable "virtual_network_resource_group" {
-  description = "The resource group where the virtual network is deployed"
+variable "monitoring_subnet_id" {
+  description = "The subnet used for monitoring traffic"
   type        = string
 }
 
@@ -54,7 +49,7 @@ variable "sensor_subnet_name" {
 variable "sensor_admin_username" {
   description = "The name of the admin user on the corelight sensor VM in the VMSS"
   type        = string
-  default     = "corelight"
+  default     = "ubuntu"
 }
 
 variable "nat_gateway_ip_name" {
@@ -201,4 +196,10 @@ variable "fleet_no_proxy" {
   type        = string
   default     = ""
   description = "(optional) hosts or domains to bypass the proxy for fleet traffic"
+}
+
+variable "monitoring_nsg_name" {
+  type        = string
+  default     = "corelight-monitoring-nsg"
+  description = "(optional) Name of the monitoring network security group"
 }

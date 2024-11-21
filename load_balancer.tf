@@ -6,7 +6,7 @@ resource "azurerm_lb" "scale_set_lb" {
 
   frontend_ip_configuration {
     name      = var.lb_frontend_ip_config_name
-    subnet_id = azurerm_subnet.subnet.id
+    subnet_id = var.monitoring_subnet_id
   }
 
   tags = var.tags
@@ -25,11 +25,12 @@ resource "azurerm_lb_backend_address_pool" "monitoring_pool" {
 resource "azurerm_lb_probe" "sensor_health_check_probe" {
   loadbalancer_id     = azurerm_lb.scale_set_lb.id
   name                = var.lb_health_check_probe_name
-  port                = 443
-  request_path        = "/api/system/healthcheck/"
-  protocol            = "Https"
+  port                = 41080
+  request_path        = "/api/system/healthcheck"
+  protocol            = "Http"
   interval_in_seconds = 30
-  probe_threshold     = 3
+  number_of_probes    = 2
+  probe_threshold     = 2
 }
 
 resource "azurerm_lb_rule" "monitoring_vxlan_lb_rule" {
@@ -45,28 +46,15 @@ resource "azurerm_lb_rule" "monitoring_vxlan_lb_rule" {
   probe_id = azurerm_lb_probe.sensor_health_check_probe.id
 }
 
-resource "azurerm_lb_rule" "monitoring_geneve_lb_rule" {
-  name                           = var.lb_geneve_rule_name
-  loadbalancer_id                = azurerm_lb.scale_set_lb.id
-  protocol                       = "Udp"
-  backend_port                   = 6081
-  frontend_port                  = 6081
-  frontend_ip_configuration_name = azurerm_lb.scale_set_lb.frontend_ip_configuration[0].name
-  backend_address_pool_ids = [
-    azurerm_lb_backend_address_pool.monitoring_pool.id
-  ]
-  probe_id = azurerm_lb_probe.sensor_health_check_probe.id
-}
-
 resource "azurerm_lb_rule" "monitoring_health_check_rule" {
   name                           = var.lb_health_check_rule_name
   loadbalancer_id                = azurerm_lb.scale_set_lb.id
   protocol                       = "Tcp"
-  backend_port                   = 443
-  frontend_port                  = 443
+  backend_port                   = 41080
+  frontend_port                  = 41080
   frontend_ip_configuration_name = azurerm_lb.scale_set_lb.frontend_ip_configuration[0].name
   backend_address_pool_ids = [
-    azurerm_lb_backend_address_pool.management_pool.id
+    azurerm_lb_backend_address_pool.monitoring_pool.id
   ]
   probe_id = azurerm_lb_probe.sensor_health_check_probe.id
 }

@@ -33,7 +33,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "sensor_scale_set" {
     ip_configuration {
       name      = "management-nic-ip-cfg"
       primary   = true
-      subnet_id = azurerm_subnet.subnet.id
+      subnet_id = var.management_subnet_id
       load_balancer_backend_address_pool_ids = [
         azurerm_lb_backend_address_pool.management_pool.id
       ]
@@ -41,15 +41,31 @@ resource "azurerm_linux_virtual_machine_scale_set" "sensor_scale_set" {
   }
 
   network_interface {
-    name = "monitoring-nic"
+    name                          = "monitoring-nic"
+    enable_accelerated_networking = true
     ip_configuration {
       name      = "monitoring-nic-ip-cfg"
-      primary   = true
-      subnet_id = azurerm_subnet.subnet.id
+      subnet_id = var.monitoring_subnet_id
       load_balancer_backend_address_pool_ids = [
         azurerm_lb_backend_address_pool.monitoring_pool.id
       ]
     }
+  }
+
+  extension {
+    name                       = "HealthExtension"
+    publisher                  = "Microsoft.ManagedServices"
+    type                       = "ApplicationHealthLinux"
+    type_handler_version       = "2.0"
+    auto_upgrade_minor_version = true
+    settings = jsonencode({
+      protocol          = "https"
+      port              = 41080
+      requestPath       = "/api/system/healthcheck"
+      intervalInSeconds = 15
+      numberOfProbes    = 2
+      gracePeriod       = 600
+    })
   }
 
   tags = var.tags

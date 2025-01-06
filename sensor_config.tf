@@ -1,8 +1,3 @@
-locals {
-  # https://learn.microsoft.com/en-us/azure/load-balancer/load-balancer-custom-probe-overview#probe-source-ip-address
-  azure_lb_health_check_probe_ip = "168.63.129.16/32"
-}
-
 module "sensor_config" {
   source = "github.com/corelight/terraform-config-sensor?ref=v0.3.0"
 
@@ -17,6 +12,9 @@ module "sensor_config" {
   sensor_management_interface_name             = "eth0"
   sensor_monitoring_interface_name             = "eth1"
   sensor_health_check_probe_source_ranges_cidr = [local.azure_lb_health_check_probe_ip]
+  sensor_health_check_http_port                = local.monitoring_health_check_port
+  subnetwork_monitoring_gateway                = cidrhost(data.azurerm_subnet.mon_subnet.address_prefix, 1)
+  subnetwork_monitoring_cidr                   = data.azurerm_subnet.mon_subnet.address_prefix
   gzip_config                                  = true
   base64_encode_config                         = true
   enrichment_enabled                           = var.enrichment_storage_account_name != "" && var.enrichment_storage_container_name != ""

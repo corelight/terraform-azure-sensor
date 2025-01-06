@@ -23,13 +23,12 @@ resource "azurerm_linux_virtual_machine_scale_set" "sensor_scale_set" {
     disk_size_gb         = var.virtual_machine_os_disk_size
   }
 
-  health_probe_id = azurerm_lb_probe.sensor_health_check_probe.id
+  health_probe_id = azurerm_lb_probe.mgmt_sensor_health_check_probe.id
   upgrade_mode    = "Automatic"
 
   network_interface {
     name    = "management-nic"
     primary = true
-
     ip_configuration {
       name      = "management-nic-ip-cfg"
       primary   = true
@@ -45,6 +44,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "sensor_scale_set" {
     enable_accelerated_networking = true
     ip_configuration {
       name      = "monitoring-nic-ip-cfg"
+      primary   = true
       subnet_id = var.monitoring_subnet_id
       load_balancer_backend_address_pool_ids = [
         azurerm_lb_backend_address_pool.monitoring_pool.id
@@ -60,7 +60,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "sensor_scale_set" {
     auto_upgrade_minor_version = true
     settings = jsonencode({
       protocol          = "https"
-      port              = 41080
+      port              = local.monitoring_health_check_port
       requestPath       = "/api/system/healthcheck"
       intervalInSeconds = 15
       numberOfProbes    = 2
@@ -69,10 +69,6 @@ resource "azurerm_linux_virtual_machine_scale_set" "sensor_scale_set" {
   }
 
   tags = var.tags
-
-  depends_on = [
-    azurerm_lb_rule.monitoring_health_check_rule,
-  ]
 }
 
 resource "azurerm_monitor_autoscale_setting" "auto_scale_config" {

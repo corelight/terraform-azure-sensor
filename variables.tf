@@ -41,11 +41,6 @@ variable "sensor_ssh_public_key" {
 }
 
 ## Variables with defaults
-variable "sensor_subnet_name" {
-  description = "The name of the subnet the VMSS will scale sensors in"
-  type        = string
-  default     = "cl-sensor-subnet"
-}
 variable "sensor_admin_username" {
   description = "The name of the admin user on the corelight sensor VM in the VMSS"
   type        = string
@@ -79,7 +74,7 @@ variable "load_balancer_name" {
 variable "scale_set_name" {
   description = "Name of the Corelight VMSS of sensors"
   type        = string
-  default     = "vmss-sensor"
+  default     = "corelight-sensor"
 }
 
 variable "virtual_machine_size" {
@@ -106,10 +101,16 @@ variable "enrichment_storage_container_name" {
   default     = ""
 }
 
-variable "lb_frontend_ip_config_name" {
-  description = "Name of the internal load balancer frontend ip configuration"
+variable "lb_management_frontend_ip_config_name" {
+  description = "Name of the internal load balancer management backend pool frontend ip configuration"
   type        = string
-  default     = "corelight-sensor-lb-ip"
+  default     = "corelight-management"
+}
+
+variable "lb_monitoring_frontend_ip_config_name" {
+  description = "Name of the internal load balancer monitoring backend pool frontend ip configuration"
+  type        = string
+  default     = "corelight-monitoring"
 }
 
 variable "lb_mgmt_backend_address_pool_name" {
@@ -124,22 +125,22 @@ variable "lb_mon_backend_address_pool_name" {
   default     = "monitoring-pool"
 }
 
-variable "lb_health_check_probe_name" {
-  description = "Name of the load balancer health check probe that check the sensor healthcheck API"
+variable "lb_monitoring_probe_name" {
+  description = "Name of the load balancer health check probe that checks if the sensor is up and ready to receive traffic on the monitoring NIC"
   type        = string
-  default     = "health-check"
+  default     = "sensor-health-check"
+}
+
+variable "lb_management_probe_name" {
+  description = "Name of the load balancer health probe that checks if SSH is available on the management NIC"
+  type        = string
+  default     = "ssh-health-check"
 }
 
 variable "lb_vxlan_rule_name" {
   description = "Name of the load balancer rule for VXLAN traffic"
   type        = string
   default     = "vxlan-lb-rule"
-}
-
-variable "lb_geneve_rule_name" {
-  description = "Name of the load balancer rule for Geneve traffic"
-  type        = string
-  default     = "geneve-lb-rule"
 }
 
 variable "lb_health_check_rule_name" {
@@ -177,7 +178,6 @@ variable "fleet_server_sslname" {
   type        = string
   default     = "1.broala.fleet.product.corelight.io"
   description = "(optional) the SSL hostname for the fleet server"
-
 }
 
 variable "fleet_http_proxy" {
@@ -196,10 +196,4 @@ variable "fleet_no_proxy" {
   type        = string
   default     = ""
   description = "(optional) hosts or domains to bypass the proxy for fleet traffic"
-}
-
-variable "monitoring_nsg_name" {
-  type        = string
-  default     = "corelight-monitoring-nsg"
-  description = "(optional) Name of the monitoring network security group"
 }

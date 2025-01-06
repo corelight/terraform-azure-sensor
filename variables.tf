@@ -102,7 +102,7 @@ variable "enrichment_storage_container_name" {
 }
 
 variable "lb_management_frontend_ip_config_name" {
-  description = "Name of the internal load balancer monitoring backend pool frontend ip configuration"
+  description = "Name of the internal load balancer management backend pool frontend ip configuration"
   type        = string
   default     = "corelight-management"
 }
@@ -178,7 +178,6 @@ variable "fleet_server_sslname" {
   type        = string
   default     = "1.broala.fleet.product.corelight.io"
   description = "(optional) the SSL hostname for the fleet server"
-
 }
 
 variable "fleet_http_proxy" {

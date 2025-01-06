@@ -50,7 +50,7 @@ resource "azurerm_lb_backend_address_pool" "monitoring_pool" {
 resource "azurerm_lb_probe" "sensor_health_check_probe" {
   loadbalancer_id     = azurerm_lb.scale_set_lb.id
   name                = var.lb_monitoring_probe_name
-  port                = 41080
+  port                = local.monitoring_health_check_port
   request_path        = "/api/system/healthcheck"
   protocol            = "Http"
   interval_in_seconds = 15

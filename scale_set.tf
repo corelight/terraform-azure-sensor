@@ -60,7 +60,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "sensor_scale_set" {
     auto_upgrade_minor_version = true
     settings = jsonencode({
       protocol          = "https"
-      port              = 41080
+      port              = local.monitoring_health_check_port
       requestPath       = "/api/system/healthcheck"
       intervalInSeconds = 15
       numberOfProbes    = 2

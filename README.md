@@ -44,6 +44,20 @@ Deployment examples can be found [here][].
 
 [here]: https://github.com/corelight/corelight-cloud/tree/main/terraform/azure-scaleset-sensor
 
+#### Least Privilege Deployment
+The Corelight Azure sensor can be deployed with the following privileges:
+
+1. The `Network Contributor` built-in role
+2. `Microsoft.Compute/images/read` on the Corelight VM Image
+3. A custom role definition with the following permissions:
+```
+"Microsoft.Resources/subscriptions/resourcegroups/read"
+"Microsoft.Compute/virtualMachineScaleSets/read"
+"Microsoft.Insights/autoScaleSettings/read"
+"Microsoft.Compute/virtualMachineScaleSets/write"
+"Microsoft.Insights/autoScaleSettings/write"
+```
+
 ## License
 
 The project is licensed under the [MIT][] license.

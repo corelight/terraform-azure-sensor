@@ -134,3 +134,4 @@ resource "azurerm_monitor_autoscale_setting" "auto_scale_config" {
     azurerm_lb_probe.sensor_health_check_probe
   ]
 }
+

@@ -9,9 +9,15 @@ variable "resource_group_name" {
 }
 
 variable "license_key" {
-  description = "Your Corelight sensor license key"
-  type        = string
+  description = "Your Corelight sensor license key. Optional if fleet_url is configured."
   sensitive   = true
+  type        = string
+  default     = ""
+
+  validation {
+    condition     = var.license_key != "" || var.fleet_url != ""
+    error_message = "Either license_key must be provided or fleet_url must be configured."
+  }
 }
 
 variable "management_subnet_id" {

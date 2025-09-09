@@ -1,5 +1,5 @@
 module "sensor_config" {
-  source = "github.com/corelight/terraform-config-sensor?ref=v0.3.0"
+  source = "github.com/corelight/terraform-config-sensor?ref=v1.0.0"
 
   fleet_community_string                       = var.community_string
   fleet_token                                  = var.fleet_token
@@ -17,8 +17,4 @@ module "sensor_config" {
   subnetwork_monitoring_cidr                   = data.azurerm_subnet.mon_subnet.address_prefix
   gzip_config                                  = true
   base64_encode_config                         = true
-  enrichment_enabled                           = var.enrichment_storage_account_name != "" && var.enrichment_storage_container_name != ""
-  enrichment_cloud_provider_name               = "azure"
-  enrichment_storage_account_name              = var.enrichment_storage_account_name
-  enrichment_bucket_name                       = var.enrichment_storage_container_name
 }

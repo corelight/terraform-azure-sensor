@@ -46,6 +46,22 @@ variable "sensor_ssh_public_key" {
   type        = string
 }
 
+variable "fleet_token" {
+  type        = string
+  sensitive   = true
+  description = "The pairing token from the Fleet UI. Must be set if 'fleet_url' is provided"
+}
+
+variable "fleet_url" {
+  type        = string
+  description = "URL of the fleet instance from the Fleet UI. Must be set if 'fleet_token' is provided"
+}
+
+variable "fleet_server_sslname" {
+  type        = string
+  description = "SSL hostname for the fleet server"
+}
+
 ## Variables with defaults
 variable "sensor_admin_username" {
   description = "The name of the admin user on the corelight sensor VM in the VMSS"
@@ -95,18 +111,6 @@ variable "virtual_machine_os_disk_size" {
   default     = 500
 }
 
-variable "enrichment_storage_account_name" {
-  description = "(optional) the azure storage account where enrichment data is stored"
-  type        = string
-  default     = ""
-}
-
-variable "enrichment_storage_container_name" {
-  description = "(optional) the container where enrichment data is stored"
-  type        = string
-  default     = ""
-}
-
 variable "lb_management_frontend_ip_config_name" {
   description = "Name of the internal load balancer management backend pool frontend ip configuration"
   type        = string
@@ -149,12 +153,6 @@ variable "lb_vxlan_rule_name" {
   default     = "vxlan-lb-rule"
 }
 
-variable "lb_health_check_rule_name" {
-  description = "Name of the load balancer rule for health check traffic"
-  type        = string
-  default     = "healthcheck-lb-rule"
-}
-
 variable "lb_ssh_rule_name" {
   description = "Name of the load balancer rule for SSH traffic"
   type        = string
@@ -165,25 +163,6 @@ variable "tags" {
   description = "Any tags that should be applied to resources deployed by the module"
   type        = object({})
   default     = {}
-}
-
-variable "fleet_token" {
-  type        = string
-  default     = ""
-  sensitive   = true
-  description = "(optional) the pairing token from the Fleet UI. Must be set if 'fleet_url' is provided"
-}
-
-variable "fleet_url" {
-  type        = string
-  default     = ""
-  description = "(optional) the URL of the fleet instance from the Fleet UI. Must be set if 'fleet_token' is provided"
-}
-
-variable "fleet_server_sslname" {
-  type        = string
-  default     = "1.broala.fleet.product.corelight.io"
-  description = "(optional) the SSL hostname for the fleet server"
 }
 
 variable "fleet_http_proxy" {

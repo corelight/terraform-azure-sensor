@@ -18,20 +18,16 @@ module "sensor" {
   sensor_ssh_public_key          = "<path to ssh public key>"
   management_subnet_id           = "<full management NIC subnet resource ID>"
   monitoring_subnet_id           = "<full management NIC subnet resource ID>"
-    
+
+  fleet_token = "<the pairing token from the Fleet UI>"
+  fleet_url   = "<the URL of the fleet instance from the Fleet UI>"
+  fleet_server_sslname = "<the ssl name provided by Fleet>"
+  
   tags = {
     foo: bar,
     terraform: true,
     purpose: Corelight
   }
-
-  # Optional - Fleet Manager
-  fleet_token = "<the pairing token from the Fleet UI>"
-  fleet_url   = "<the URL of the fleet instance from the Fleet UI>"
-
-  # (Optional) Cloud Enrichment Variables
-  enrichment_storage_account_name   = "<name of the enrichment storage account>"
-  enrichment_storage_container_name = "<name of the enrichment container in the storage account>"
 }
 ```
 

@@ -66,7 +66,7 @@ variable "fleet_server_sslname" {
 variable "sensor_admin_username" {
   description = "The name of the admin user on the corelight sensor VM in the VMSS"
   type        = string
-  default     = "ubuntu"
+  default     = "corelight"
 }
 
 variable "nat_gateway_ip_name" {
@@ -161,8 +161,8 @@ variable "lb_ssh_rule_name" {
 
 variable "tags" {
   description = "Any tags that should be applied to resources deployed by the module"
-  type        = object({})
-  default     = {}
+  type = object({})
+  default = {}
 }
 
 variable "fleet_http_proxy" {

@@ -161,8 +161,8 @@ variable "lb_ssh_rule_name" {
 
 variable "tags" {
   description = "Any tags that should be applied to resources deployed by the module"
-  type = object({})
-  default = {}
+  type        = object({})
+  default     = {}
 }
 
 variable "fleet_http_proxy" {

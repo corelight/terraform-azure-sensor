@@ -15,6 +15,8 @@ module "sensor_config" {
   sensor_health_check_http_port                = local.monitoring_health_check_port
   subnetwork_monitoring_gateway                = cidrhost(data.azurerm_subnet.mon_subnet.address_prefixes[0], 1)
   subnetwork_monitoring_cidr                   = data.azurerm_subnet.mon_subnet.address_prefix
+  fedramp_mode_enabled                         = var.fedramp_mode_enabled
+  prometheus_enabled                           = var.prometheus_enabled
   gzip_config                                  = true
   base64_encode_config                         = true
 }

@@ -182,3 +182,15 @@ variable "fleet_no_proxy" {
   default     = ""
   description = "(optional) hosts or domains to bypass the proxy for fleet traffic"
 }
+
+variable "prometheus_enabled" {
+  type        = bool
+  default     = false
+  description = "(optional) enable Prometheus metrics"
+}
+
+variable "fedramp_mode_enabled" {
+  type        = bool
+  default     = false
+  description = "(optional) enable Fedramp mode"
+}

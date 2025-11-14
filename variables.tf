@@ -66,7 +66,7 @@ variable "fleet_server_sslname" {
 variable "sensor_admin_username" {
   description = "The name of the admin user on the corelight sensor VM in the VMSS"
   type        = string
-  default     = "ubuntu"
+  default     = "corelight"
 }
 
 variable "nat_gateway_ip_name" {
@@ -181,4 +181,16 @@ variable "fleet_no_proxy" {
   type        = string
   default     = ""
   description = "(optional) hosts or domains to bypass the proxy for fleet traffic"
+}
+
+variable "prometheus_enabled" {
+  type        = bool
+  default     = false
+  description = "(optional) enable Prometheus metrics"
+}
+
+variable "fedramp_mode_enabled" {
+  type        = bool
+  default     = false
+  description = "(optional) enable Fedramp mode"
 }

@@ -161,7 +161,7 @@ variable "lb_ssh_rule_name" {
 
 variable "tags" {
   description = "Any tags that should be applied to resources deployed by the module"
-  type        = object({})
+  type        = map(string)
   default     = {}
 }
 

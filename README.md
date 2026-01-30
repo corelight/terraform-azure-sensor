@@ -24,9 +24,9 @@ module "sensor" {
   fleet_server_sslname = "<the ssl name provided by Fleet>"
   
   tags = {
-    foo: bar,
-    terraform: true,
-    purpose: Corelight
+    foo       = "bar"
+    terraform = true
+    purpose   = "Corelight"
   }
 }
 ```

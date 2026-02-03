@@ -1,3 +1,9 @@
+variable "create_nat_gateway" {
+  description = "Controls if the NAT gateway and its associated resources should be created."
+  type        = bool
+  default     = true
+}
+
 variable "location" {
   description = "The Azure location where resources will be deployed"
   type        = string

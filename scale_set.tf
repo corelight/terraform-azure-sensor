@@ -59,7 +59,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "sensor_scale_set" {
     type_handler_version       = "2.0"
     auto_upgrade_minor_version = true
     settings = jsonencode({
-      protocol          = "https"
+      protocol          = "http"
       port              = local.monitoring_health_check_port
       requestPath       = "/api/system/healthcheck"
       intervalInSeconds = 15
@@ -69,6 +69,11 @@ resource "azurerm_linux_virtual_machine_scale_set" "sensor_scale_set" {
   }
 
   tags = var.tags
+
+  depends_on = [
+    azurerm_lb_rule.management_lb_rule,
+    azurerm_lb_rule.monitoring_vxlan_lb_rule
+  ]
 }
 
 resource "azurerm_monitor_autoscale_setting" "auto_scale_config" {

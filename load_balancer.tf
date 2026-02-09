@@ -51,7 +51,7 @@ resource "azurerm_lb_probe" "sensor_health_check_probe" {
   loadbalancer_id     = azurerm_lb.scale_set_lb.id
   name                = var.lb_monitoring_probe_name
   port                = local.monitoring_health_check_port
-  request_path        = "/api/system/healthcheck"
+  request_path        = "/api/system/healthcheck?services=core"
   protocol            = "Http"
   interval_in_seconds = 15
   number_of_probes    = 3

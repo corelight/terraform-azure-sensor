@@ -200,3 +200,9 @@ variable "fedramp_mode_enabled" {
   default     = false
   description = "(optional) enable Fedramp mode"
 }
+
+variable "healthcheck_path" {
+  type        = string
+  default     = "/api/system/healthcheck"
+  description = "(optional) path for the health check probe"
+}

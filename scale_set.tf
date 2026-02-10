@@ -61,7 +61,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "sensor_scale_set" {
     settings = jsonencode({
       protocol          = "http"
       port              = local.monitoring_health_check_port
-      requestPath       = "/api/system/healthcheck?services=core"
+      requestPath       = var.healthcheck_path
       intervalInSeconds = 15
       numberOfProbes    = 2
       gracePeriod       = 600

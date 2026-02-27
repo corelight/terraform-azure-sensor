@@ -1,3 +1,9 @@
+variable "create_nat_gateway" {
+  description = "Controls if the NAT gateway and its associated resources should be created."
+  type        = bool
+  default     = true
+}
+
 variable "location" {
   description = "The Azure location where resources will be deployed"
   type        = string
@@ -193,4 +199,10 @@ variable "fedramp_mode_enabled" {
   type        = bool
   default     = false
   description = "(optional) enable Fedramp mode"
+}
+
+variable "healthcheck_path" {
+  type        = string
+  default     = "/api/system/healthcheck"
+  description = "(optional) path for the health check probe"
 }

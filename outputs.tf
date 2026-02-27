@@ -3,11 +3,11 @@ output "internal_load_balancer_name" {
 }
 
 output "nat_gateway_public_ip_name" {
-  value = azurerm_public_ip.nat_gw_ip.name
+  value = length(azurerm_public_ip.nat_gw_ip) > 0 ? azurerm_public_ip.nat_gw_ip[0].name : null
 }
 
 output "nat_gateway_name" {
-  value = azurerm_nat_gateway.lb_nat_gw.name
+  value = length(azurerm_nat_gateway.lb_nat_gw) > 0 ? azurerm_nat_gateway.lb_nat_gw[0].name : null
 }
 
 output "sensor_identity_principal_id" {
